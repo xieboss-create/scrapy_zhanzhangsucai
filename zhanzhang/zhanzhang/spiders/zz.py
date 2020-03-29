@@ -6,8 +6,11 @@ from ..items import ZhanzhangItem
 
 class ZzSpider(scrapy.Spider):
     name = 'zz'
-    allowed_domains = ['http://sc.chinaz.com/tupian/shanshuifengjing.html']
+    allowed_domains = ['sc.chinaz.com']
     start_urls = ['http://sc.chinaz.com/tupian/shanshuifengjing.html']
+
+    base_url = 'http://sc.chinaz.com/tupian/shanshuifengjing'
+    page = 1
 
     def parse(self, response):
         img_list = response.xpath('//div[@id="container"]//img')
@@ -21,3 +24,9 @@ class ZzSpider(scrapy.Spider):
 
             zz = ZhanzhangItem(src=src, alt=alt)
             yield zz
+
+        if self.page < 5:
+            self.page = self.page + 1
+            url = self.base_url + '_' + str(self.page) + '.html'
+            print(url)
+            yield scrapy.Request(url=url, callback=self.parse)
