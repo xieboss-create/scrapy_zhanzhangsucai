@@ -19,5 +19,5 @@ class ZzSpider(scrapy.Spider):
             # zz['src']=src
             # zz['alt']=alt
 
-            zz = ZhanzhangItem(src=src,alt=alt)
+            zz = ZhanzhangItem(src=src, alt=alt)
             yield zz
