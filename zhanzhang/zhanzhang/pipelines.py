@@ -18,3 +18,18 @@ class ZhanzhangPipeline(object):
     # 执行完爬虫文件之后 调用的方法
     def close_spider(self, spider):
         self.fp.close()
+
+
+import urllib.request
+
+
+class DownLoadImagePipeline(object):
+    def process_item(self, item, spider):
+        src = item['src']
+        alt = item['alt']
+
+        filename = './images/' + alt + '.jpg'
+
+        urllib.request.urlretrieve(url=src, filename=filename)
+
+        return item
